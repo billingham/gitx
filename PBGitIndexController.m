@@ -8,6 +8,7 @@
 
 #import "PBGitIndexController.h"
 #import "PBChangedFile.h"
+#import "PBGitRepository.h"
 
 #define FileChangesTableViewType @"GitFileChangedType"
 
@@ -76,6 +77,38 @@
 	}
 }
 
+- (void) ignoreFiles:(NSArray *)files
+{
+	// Build output string
+	NSMutableArray *fileList = [NSMutableArray array];
+	for (PBChangedFile *file in files) {
+		NSString *name = file.path ;
+		if ([name length] > 0) {
+			[fileList addObject:name];
+		}
+	}
+	NSString *filesAsString = [fileList componentsJoinedByString:@"\n"];
+
+	// Write to the file
+	NSString *gitIgnoreName = [commitController.repository gitIgnoreFilename];
+
+	NSFileManager *fs = [NSFileManager defaultManager];
+	NSData *existing = [fs contentsAtPath:gitIgnoreName];
+	NSMutableData *output = [NSMutableData dataWithData:existing];
+
+	if ([existing length] > 0) {
+		const void * lastByte = [existing bytes] + [existing length] -1;
+		if (*(const char *)lastByte != '\n') {
+			filesAsString = [@"\n" stringByAppendingString: filesAsString];
+		}
+	}
+	[output appendData:[filesAsString dataUsingEncoding:NSUTF8StringEncoding]];
+
+	if (![fs createFileAtPath:gitIgnoreName contents:output attributes:nil]) {
+		NSRunAlertPanel(@"", @"Failed to save %@", @"OK" , NULL, NULL, gitIgnoreName);
+	}
+}
+
 # pragma mark Displaying diffs
 
 - (NSString *) stagedChangesForFile:(PBChangedFile *)file
@@ -124,6 +157,16 @@
 
 
 # pragma mark Context Menu methods
+- (BOOL) allSelectedCanBeIgnored:(NSArray *)selectedFiles
+{
+	for (PBChangedFile *selectedItem in selectedFiles) {
+		if (selectedItem.status != NEW) {
+			return NO;
+		}
+	}
+	return YES;
+}
+
 - (NSMenu *) menuForTable:(NSTableView *)table
 {
 	NSMenu *menu = [[NSMenu alloc] init];
@@ -150,7 +193,15 @@
 	[openItem setRepresentedObject:selectedFiles];
 	[menu addItem:openItem];
 
-	
+	// Attempt to ignore
+	if ([self allSelectedCanBeIgnored:selectedFiles]) {
+		NSString *ignoreText = [selectedFiles count] == 1 ? @"Ignore File": @"Ignore Files";
+		NSMenuItem *ignoreItem = [[NSMenuItem alloc] initWithTitle:ignoreText action:@selector(ignoreFilesAction:) keyEquivalent:@""];
+		[ignoreItem setTarget:self];
+		[ignoreItem setRepresentedObject:selectedFiles];
+		[menu addItem:ignoreItem];
+	}
+
 	// Do not add "revert" options for untracked files
 	//	if (selectedItem.status == NEW)
 	//		return a;
@@ -186,6 +237,16 @@
 	for (PBChangedFile *file in files)
 		[[NSWorkspace sharedWorkspace] openFile:[workingDirectory stringByAppendingPathComponent:[file path]]];
 }
+
+- (void) ignoreFilesAction:(id) sender
+{
+	NSArray *selectedFiles = [sender representedObject];
+	if ([selectedFiles count] > 0) {
+		[self ignoreFiles:selectedFiles];
+	}
+	[commitController refresh:NULL];
+}
+
 
 # pragma mark TableView icon delegate
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn*)tableColumn row:(int)rowIndex
