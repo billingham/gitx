@@ -81,6 +81,8 @@
 		F5C580E50EDA250900995434 /* libgit2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C580E40EDA250900995434 /* libgit2.a */; };
 		F5C580F50EDA251100995434 /* libgit2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C580E40EDA250900995434 /* libgit2.a */; };
 		F5C6F68D0E65FF9300478D97 /* PBGitLane.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5C6F68C0E65FF9300478D97 /* PBGitLane.mm */; };
+		F5CB9A0A0EE6D88F00C13737 /* PBGitWindowSourceController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB9A090EE6D88F00C13737 /* PBGitWindowSourceController.m */; };
+		F5CB9A980EE6E2AC00C13737 /* PBOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5CB9A970EE6E2AC00C13737 /* PBOutlineView.m */; };
 		F5DFFA6C0E075D8800617813 /* PBEasyFS.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DFFA6B0E075D8800617813 /* PBEasyFS.m */; };
 		F5E424110EA3E4D60046E362 /* PBDiffWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5E424100EA3E4D60046E362 /* PBDiffWindow.xib */; };
 		F5E424150EA3E4E10046E362 /* PBDiffWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E424130EA3E4E10046E362 /* PBDiffWindowController.m */; };
@@ -216,6 +218,10 @@
 		F5C580E40EDA250900995434 /* libgit2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgit2.a; path = libgit2/libgit2.a; sourceTree = "<group>"; };
 		F5C6F68B0E65FF9300478D97 /* PBGitLane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBGitLane.h; sourceTree = "<group>"; };
 		F5C6F68C0E65FF9300478D97 /* PBGitLane.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PBGitLane.mm; sourceTree = "<group>"; };
+		F5CB9A080EE6D88F00C13737 /* PBGitWindowSourceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBGitWindowSourceController.h; sourceTree = "<group>"; };
+		F5CB9A090EE6D88F00C13737 /* PBGitWindowSourceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBGitWindowSourceController.m; sourceTree = "<group>"; };
+		F5CB9A960EE6E2AC00C13737 /* PBOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBOutlineView.h; sourceTree = "<group>"; };
+		F5CB9A970EE6E2AC00C13737 /* PBOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBOutlineView.m; sourceTree = "<group>"; };
 		F5D2DC850EA401A80034AD24 /* PBGitConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBGitConfig.h; sourceTree = "<group>"; };
 		F5D619ED0EAE62EA00341D73 /* html */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = folder; path = html; sourceTree = "<group>"; };
 		F5DFFA6A0E075D8800617813 /* PBEasyFS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBEasyFS.h; sourceTree = "<group>"; };
@@ -429,6 +435,7 @@
 		F57CC3850E05DDC1000472E2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F5CB9A060EE6D87600C13737 /* Window */,
 				F5B161BB0EAB6E0C005A1DE1 /* Diff */,
 				F5EF8C880E9D498F0050906B /* History */,
 				F5E927F90E883EF600056E75 /* Commit */,
@@ -436,8 +443,6 @@
 				77C8280C06725ACE000B614F /* ApplicationController.m */,
 				93CB42C00EAB7B2200530609 /* PBGitDefaults.h */,
 				93CB42C10EAB7B2200530609 /* PBGitDefaults.m */,
-				F57CC43F0E05E496000472E2 /* PBGitWindowController.h */,
-				F57CC4400E05E496000472E2 /* PBGitWindowController.m */,
 				911111F60E594F3F00BF76B4 /* PBRepositoryDocumentController.h */,
 				911111F70E594F3F00BF76B4 /* PBRepositoryDocumentController.m */,
 				F5E926040E8827D300056E75 /* PBViewController.h */,
@@ -509,6 +514,19 @@
 				F5C6F68C0E65FF9300478D97 /* PBGitLane.mm */,
 			);
 			name = Graphing;
+			sourceTree = "<group>";
+		};
+		F5CB9A060EE6D87600C13737 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				F57CC43F0E05E496000472E2 /* PBGitWindowController.h */,
+				F57CC4400E05E496000472E2 /* PBGitWindowController.m */,
+				F5CB9A080EE6D88F00C13737 /* PBGitWindowSourceController.h */,
+				F5CB9A090EE6D88F00C13737 /* PBGitWindowSourceController.m */,
+				F5CB9A960EE6E2AC00C13737 /* PBOutlineView.h */,
+				F5CB9A970EE6E2AC00C13737 /* PBOutlineView.m */,
+			);
+			name = Window;
 			sourceTree = "<group>";
 		};
 		F5E927E10E883D2E00056E75 /* History */ = {
@@ -766,6 +784,8 @@
 				F574A2850EAE2EAC003F2CB1 /* PBRefController.m in Sources */,
 				F5FC43FE0EBD08EE00191D80 /* PBRefMenuItem.m in Sources */,
 				F523CEB60ED3399200DDD714 /* PBGitIndexController.m in Sources */,
+				F5CB9A0A0EE6D88F00C13737 /* PBGitWindowSourceController.m in Sources */,
+				F5CB9A980EE6E2AC00C13737 /* PBOutlineView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
